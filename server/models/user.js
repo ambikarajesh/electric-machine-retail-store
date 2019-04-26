@@ -26,7 +26,7 @@ const userSchema = new Shema({
     token:{
         type:String
     }
-});
+},{timestamps:true});
 
 userSchema.pre('save', function(next){
  var user = this;
