@@ -83,3 +83,13 @@ exports.getAuth = (req, res, next) =>{
         user: req.user
     })
 }
+
+exports.getLogout = (req, res, next) =>{
+    User.findByIdAndUpdate({_id:req.user._id}, {token:""}).then(user=>{
+        res.clearCookie('auth').status(200).json({
+            status:'00',
+            message:"Logout successfully"
+        })
+    })
+    
+}

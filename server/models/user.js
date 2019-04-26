@@ -30,18 +30,18 @@ const userSchema = new Shema({
 
 userSchema.pre('save', function(next){
  var user = this;
- bcrypt.genSalt(10, (err, salt)=>{
-    if(err){
-        return next(err);
-    }
-    bcrypt.hash(user.password, salt, (err, hashPwd)=>{
+ if(user.isModified('password')){
+    bcrypt.hash(user.password, 10, (err, hashPwd)=>{
         if(err){
             return next(err);
         }
         user.password = hashPwd;
         next();
     })
- })
+ }else{
+     next();
+ }
+     
 })
 
 userSchema.methods.comparePassword = function(userPassword, callback){ 
@@ -56,9 +56,11 @@ userSchema.methods.comparePassword = function(userPassword, callback){
 userSchema.methods.generateToken = function(callback){
     const user = this;
     const token = jwt.sign({password:user.password, userId:user._id}, process.env.JWTKEY);
+    console.log('user:',user)
     user.token = token;
-    console.log(token)
+    console.log(user)
     user.save((err, person)=>{
+        console.log('person:', person)
         if(err){
             return callback(err)
         }

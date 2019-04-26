@@ -1,5 +1,5 @@
 const express = require('express');
-const userController = require('../controlller/user');
+const userController = require('../controller/user');
 const {check} = require("express-validator/check");
 const router = express.Router();
 const User = require('../models/user');
@@ -19,4 +19,5 @@ router.post('/register', [check('email').isEmail().withMessage('Please Enter Val
 router.post('/login', [check('email').isEmail().withMessage('Invalid  Email !!!').normalizeEmail(),
                         check("password").isLength({min:8}).withMessage("Invalid Password !!!").trim()], userController.postLogin)
 router.get('/auth',isAuth, userController.getAuth);
+router.get('/logout', isAuth, userController.getLogout);
 module.exports = router;

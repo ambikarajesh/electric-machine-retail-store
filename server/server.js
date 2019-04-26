@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const userRoute = require('./routes/user');
+const productRoute = require('./routes/product');
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/user', userRoute);
+app.use('/product', productRoute)
 app.use((error, req, res, next)=>{
     res.status(error.statusCode).json({
         status:error.status,
