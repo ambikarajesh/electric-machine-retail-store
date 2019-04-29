@@ -56,11 +56,8 @@ userSchema.methods.comparePassword = function(userPassword, callback){
 userSchema.methods.generateToken = function(callback){
     const user = this;
     const token = jwt.sign({password:user.password, userId:user._id}, process.env.JWTKEY);
-    console.log('user:',user)
     user.token = token;
-    console.log(user)
     user.save((err, person)=>{
-        console.log('person:', person)
         if(err){
             return callback(err)
         }

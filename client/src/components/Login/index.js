@@ -54,16 +54,18 @@ class Login extends Component {
         const data = generateData(this.state.formdata)
         const validForm = validateForm(this.state.formdata)
         if(validForm){
-            this.props.loginUser(data).then(res=>{
-                console.log(res)
+            this.props.loginUser(data).then(res=>{                
                 if(res.payload.status==='00'){
-                    this.props.history.push('/products');
+                    this.setState({formError:false, formSuccess:true})
+                            this.props.history.push('/user')
                 }else{
-                    this.setState({formError:false, formErrorMsg:res.payload.response.data.message})
+                    this.setState({formError:false});
                 }
+            }).catch(err=>{
+                this.setState({formError:false});
             })
         }else{
-            this.setState({formError:validForm ? true : false});
+            this.setState({formError:false});
         }
     }
     render() {

@@ -9,7 +9,12 @@ const validate = (element, formdata) =>{
         const valid = element.value.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/) !== null;
         const message = `${!valid ? 'Invalid Password':''}`;
         error = valid ? error : [valid, message];
-    }    
+    }  
+    if(element.validation.confirmPassword){
+        const valid = element.value === formdata.password.value;
+        const message = `${!valid ? 'Not Match with Password':''}`;
+        error = valid ? error : [valid, message];
+    }   
     if(element.validation.required){
         const valid = element.value.trim()!== '';
         const message = `${!valid ? 'This field is required':''}`;
@@ -38,7 +43,9 @@ export const updateInput = (element, formdata, formType)=>{
 export const generateData = (formdata) => {
     let data = {};
     for(let key in formdata){
-        data[key] = formdata[key].value;
+        if(key!=='confirmPassword'){
+            data[key] = formdata[key].value;
+        }
     }
     return data;
 }
