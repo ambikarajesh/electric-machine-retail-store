@@ -59,7 +59,7 @@ class Login extends Component {
                     this.setState({formError:false, formSuccess:true})
                             this.props.history.push('/user')
                 }else{
-                    this.setState({formError:false});
+                    this.setState({formError:false, formErrorMsg:res.payload.message});
                 }
             }).catch(err=>{
                 this.setState({formError:false});
@@ -72,7 +72,7 @@ class Login extends Component {
         return (
             <div className='signin_wrapper'>
                <form onSubmit={this.submitHandler} >
-                    {!this.state.formError ? <div className='error_label'>{this.state.formErrorMsg? this.state.formErrorMsg: 'Please Complete the Input field without Error!!!'}</div> : null}
+                    {!this.state.formError ? <div className='error_label' style={{textAlign:'center'}}>{this.state.formErrorMsg? this.state.formErrorMsg: 'Please Complete the Input field without Error!!!'}</div> : null}
                     <FormField
                     id={'email'}
                     formdata={this.state.formdata.email}

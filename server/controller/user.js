@@ -43,7 +43,7 @@ exports.postLogin = (req, res, next)=>{
             throw error;
         }
         user.comparePassword(req.body.password, (err, isMatch)=>{
-            console.log(isMatch)
+         
             if(!isMatch){
                 const error = new Error('Invalid Password !!!');
                 error.status = '01';

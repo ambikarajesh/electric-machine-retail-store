@@ -103,13 +103,14 @@ class Register extends Component {
         const validForm = validateForm(this.state.formdata)
         if(validForm){
             this.props.dispatch(userRegister(data)).then(res=>{
+                console.log(res)
                 if(res.payload.status === '00'){
                     this.setState({formError:false, formSuccess:true})
                     setTimeout(()=>{
                         this.props.history.push('/register_login')
                     }, 3000);
                 }else{
-                    this.setState({formError:false});
+                    this.setState({formError:false, formErrorMsg:res.payload.message});
                 }
             }).catch(err=>{
                 this.setState({formError:false});
@@ -126,6 +127,7 @@ class Register extends Component {
                     <div className='register_login_container'>
                         <div className='left'>
                             <form onSubmit={this.submitHandler} >
+                            {!this.state.formError ? <div className='error_label' style={{textAlign:'center'}}>{this.state.formErrorMsg? this.state.formErrorMsg: 'Please Complete the Input field without Error!!!'}</div> : null}
                                 <h2>Personal Information</h2>
                                 <div className='form_block_two'>
                                     <div className='block'>
